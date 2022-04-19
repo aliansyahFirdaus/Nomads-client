@@ -10,7 +10,9 @@ export default {
 </script>
 
 <template>
-    <h1>Login</h1>
+  <div class="modal-dialog modal-dialog-centered">
+    <h1>Rahasia</h1>
+  </div>
 </template>
 
 <style></style>

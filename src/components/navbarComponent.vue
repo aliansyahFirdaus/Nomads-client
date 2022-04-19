@@ -1,4 +1,5 @@
 <script>
+import LoginPage from "../views/loginPage.vue";
 export default {
   data() {
     return {
@@ -8,6 +9,7 @@ export default {
   computed: {},
   methods: {},
   componens: {},
+  components: { LoginPage },
 };
 </script>
 
@@ -26,12 +28,10 @@ export default {
       >
         <span class="navbar-toggler-icon"></span>
       </button>
-      
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <!-- Menu -->
         <ul class="navbar-nav ms-auto me-4 mb-lg-0">
-
           <li class="nav-item me-2">
             <a class="nav-link active" aria-current="page" href="#">Home</a>
           </li>
@@ -72,7 +72,15 @@ export default {
         </div> -->
 
         <!-- Login button -->
-        <button class="btn btn-sm btn-success me-4"><i class="fa-solid fa-right-to-bracket me-1"></i> Login</button>
+        <button
+          class="btn btn-sm btn-success me-4"
+          type="button"
+          data-bs-toggle="modal"
+          data-bs-target="#login"
+        >
+          <i class="fa-solid fa-right-to-bracket me-1"></i>
+          Login
+        </button>
 
         <!-- Avatar -->
         <div
@@ -84,12 +92,14 @@ export default {
             text-align: center;
           "
         >
-          <p style="font-size: 23px; margin-top: 15px; color: azure" v-if="name">
+          <p
+            style="font-size: 23px; margin-top: 15px; color: azure"
+            v-if="name"
+          >
             {{ name[0] }}
           </p>
           <p v-else><i class="fa-solid fa-user pt-3 text-light"></i></p>
         </div>
-
       </div>
     </div>
   </nav>
@@ -102,7 +112,6 @@ export default {
 }
 
 .nav-item {
-    font-weight: 600;
+  font-weight: 600;
 }
-
 </style>

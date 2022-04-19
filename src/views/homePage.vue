@@ -5,6 +5,7 @@ import FilterAdvance from "../components/filterAdvance.vue";
 import CardTravelHorizon from "../components/cardTravelHorizon.vue";
 import TitlePrimary from "../components/titlePrimary.vue";
 import SubHeading from "../components/subHeading.vue";
+import LoginPage from "./loginPage.vue";
 export default {
   data() {
     return {
@@ -36,6 +37,7 @@ export default {
     CardTravelHorizon,
     TitlePrimary,
     SubHeading,
+    LoginPage,
   },
 };
 </script>
@@ -55,7 +57,8 @@ export default {
           What we serve
         </h5>
         <h1 class="my-3" style="font-size: 51px; font-weight: 800">
-          Top Service <br> For You <span style="font-size: 30px">🔥</span>
+          Top Service <br />
+          For You <span style="font-size: 30px">🔥</span>
         </h1>
         <p class="text-secondary" style="width: 250px">
           Lorem Ipsum is simply dummy text of the printing.
@@ -119,7 +122,6 @@ export default {
 
     <!-- Jualan 1 -->
     <div class="row px-4" style="margin-top: 130px">
-
       <!-- Card Jualan -->
       <div class="col">
         <div class="row d-flex align-items-center">
@@ -204,8 +206,30 @@ export default {
       </div>
     </div>
 
+    <!-- Flight with -->
+    <div class="row flight-with" style="margin-top: 130px">
+      <div class="col d-flex align-items-center justify-content-center">
+        <img src="../assets/airline/Airasia.png" width="130" />
+      </div>
+      <div class="col d-flex align-items-center justify-content-center">
+        <img src="../assets/airline/Citilink (1).png" width="130" />
+      </div>
+      <div class="col d-flex align-items-center justify-content-center">
+        <img src="../assets/airline/Etihad (1).png" width="130" />
+      </div>
+      <div class="col d-flex align-items-center justify-content-center">
+        <img src="../assets/airline/Garuda Indonesia (1).png" width="130" />
+      </div>
+      <div class="col d-flex align-items-center justify-content-center">
+        <img src="../assets/airline/Scoot (1).png" width="90" />
+      </div>
+      <div class="col d-flex align-items-center justify-content-center">
+        <img src="../assets/airline/Singapore Airlines (1).png" width="130" />
+      </div>
+    </div>
+
     <!-- Product List -->
-    <div class="row mt-5">
+    <div class="row" style="margin-top: 100px">
       <TitlePrimary title="Recomendation" />
       <SubHeading text="Beberapa rekomendasi dari kami untuk kamu" />
 
@@ -231,7 +255,206 @@ export default {
         </button>
       </div>
     </div>
+  </div>
 
+  <!-- How to Payment -->
+
+  <!-- Login -->
+  <div
+    class="modal fade"
+    id="login"
+    tabindex="-1"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+      <div class="modal-content">
+        <div class="modal-body p-0">
+          <div class="row">
+            <div class="col d-flex align-items-center justify-content-center">
+              <form style="width: 400px">
+                <!-- Headline -->
+                <h1 class="mb-5" style="font-weight: 800">Login</h1>
+
+                <!-- Email -->
+                <div class="mb-3">
+                  <label for="exampleInputEmail1" class="form-label"
+                    >Email address</label
+                  >
+                  <input
+                    type="email"
+                    class="form-control"
+                    id="exampleInputEmail1"
+                    aria-describedby="emailHelp"
+                  />
+                </div>
+
+                <!-- Password -->
+                <div class="mb-4">
+                  <label for="exampleInputPassword1" class="form-label"
+                    >Password</label
+                  >
+                  <input
+                    type="password"
+                    class="form-control"
+                    id="exampleInputPassword1"
+                  />
+                </div>
+
+                <!-- Button Submit -->
+                <div class="row px-2" style="margin-top: 30px">
+                  <button type="submit" class="btn btn-primary">Login</button>
+                </div>
+
+                <!-- Direct -->
+                <div class="text-center mt-4">
+                  <p>
+                    You don't have an account?
+                    <a
+                      href="#"
+                      data-bs-toggle="modal"
+                      data-bs-target="#register"
+                      >Register!</a
+                    >
+                  </p>
+                </div>
+              </form>
+            </div>
+            <div class="col">
+              <img src="https://dummyimage.com/600x500/000/fff" alt="" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Register -->
+  <div
+    class="modal fade"
+    id="register"
+    tabindex="-1"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+      <div class="modal-content">
+        <div class="modal-body p-0">
+          <div class="row">
+            <div class="col d-flex align-items-center justify-content-center">
+              <form style="width: 400px">
+                <!-- Headline -->
+                <h1 class="mb-5 text-center" style="font-weight: 800">Register</h1>
+
+                <!-- Firstname Lastname -->
+                <div class="row">
+                  <div class="col">
+                    <div class="mb-4">
+                      <label for="exampleInputEmail1" class="form-label"
+                        >First Name</label
+                      >
+                      <input
+                        type="email"
+                        class="form-control"
+                        id="exampleInputEmail1"
+                        aria-describedby="emailHelp"
+                      />
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="mb-4">
+                      <label for="exampleInputEmail1" class="form-label"
+                        >Last Name</label
+                      >
+                      <input
+                        type="email"
+                        class="form-control"
+                        id="exampleInputEmail1"
+                        aria-describedby="emailHelp"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Email -->
+                <div class="mb-4">
+                  <label for="exampleInputEmail1" class="form-label"
+                    >Email address</label
+                  >
+                  <input
+                    type="email"
+                    class="form-control"
+                    id="exampleInputEmail1"
+                    aria-describedby="emailHelp"
+                  />
+                </div>
+
+                <!-- Password -->
+                <div class="mb-4">
+                  <label for="exampleInputPassword1" class="form-label"
+                    >Password</label
+                  >
+                  <input
+                    type="password"
+                    class="form-control"
+                    id="exampleInputPassword1"
+                  />
+                </div>
+
+                <!-- Phone Number -->
+                <div class="mb-4">
+                  <label for="exampleInputPassword1" class="form-label"
+                    >Phone Number</label
+                  >
+                  <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon1">+62</span>
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="Username"
+                      aria-label="Username"
+                      aria-describedby="basic-addon1"
+                    />
+                  </div>
+                </div>
+
+                <!-- Remember Me -->
+                <!-- <div class="mb-4 form-check">
+                  <input
+                    type="checkbox"
+                    class="form-check-input"
+                    id="exampleCheck1"
+                  />
+                  <label class="form-check-label" for="exampleCheck1"
+                    >Check me out</label
+                  >
+                </div> -->
+
+                <!-- Botton Submit -->
+                <div class="row px-2" style="margin-top: 30px">
+                  <button type="submit" class="btn btn-primary">
+                    Register
+                  </button>
+                </div>
+
+                <!-- Direct -->
+                <div class="text-center mt-4">
+                  <p>
+                    You have an account?
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#login"
+                      >Login!</a
+                    >
+                  </p>
+                </div>
+              </form>
+            </div>
+            <div class="col">
+              <img src="https://dummyimage.com/600x700/000/fff" alt="" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 

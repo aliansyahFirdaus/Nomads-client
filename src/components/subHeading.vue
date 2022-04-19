@@ -7,7 +7,7 @@ export default {
 </script>
 
 <template>
-  <p class="mb-5 ms-4 text-secondary">{{ text }}</p>
+  <p class="mb-5 ms-4 text-secondary text-center">{{ text }}</p>
 </template>
 
 <style scoped>

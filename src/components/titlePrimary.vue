@@ -7,7 +7,7 @@ export default {
 </script>
 
 <template>
-  <h1 class="mt-5 ms-4">{{ title }}</h1>
+  <h1 class="mt-5 ms-4 text-center">{{ title }}</h1>
 </template>
 
 <style>
