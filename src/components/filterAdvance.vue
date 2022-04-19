@@ -97,7 +97,7 @@
 
 <style scoped>
 .container {
-  max-width: 1220px;
+  max-width: 1400px;
 }
 
 .filter-section {
