@@ -1,8 +1,10 @@
 <script></script>
 
 <template>
-  <div class="card m-3" style="width: 21rem; padding: 12px">
-    <img src="https://dummyimage.com/400x200/000/fff" class="card-img-top" />
+  <div class="card m-2" style="width: 21rem; padding: 7px; border-radius: 9px">
+    <img src="https://dummyimage.com/350x275/000/fff" class="card-img-top" style="border-radius: 30px;"/>
+
+    <i class="fa-regular fa-heart" style="font-size: 25px;"></i>
 
     <div class="card-body">
       <div class="card-title">
@@ -74,16 +76,16 @@
 
     <div class="card-footer border-0 mt-3 py-3">
       <div class="row d-flex align-items-center">
-        <div class="col">
+        <div class="col-5 d-flex justify-content-end">
           <button
             class="btn btn-success"
-            style="padding: 7px 40px; font-weight: 800"
+            style="padding: 7px 30px; font-weight: 800"
           >
             Book
           </button>
         </div>
         <div class="col text-center">
-          <h5 class="m-0">Rp. 300.000</h5>
+          <h5 class="m-0" style="font-size: 20px">Rp. 3.000.000</h5>
         </div>
       </div>
     </div>
@@ -97,6 +99,7 @@
 }
 
 .card {
+    border: 0;
   border-radius: 0;
 }
 
@@ -104,7 +107,27 @@
   font-size: 15px;
 }
 
+.card-img-top {
+  position: relative;
+}
+
 .btn {
-  border-radius: 5px !important;
+  border-radius: 30px !important;
+}
+
+.fa-heart {
+  position: absolute;
+  right: 25px;
+  top: 25px;
+  color: aliceblue;
+  cursor: pointer;
+}
+
+.fa-heart:hover {
+  color: rgb(216, 54, 54);
+}
+
+.card-footer {
+    border-radius: 100px;
 }
 </style>
