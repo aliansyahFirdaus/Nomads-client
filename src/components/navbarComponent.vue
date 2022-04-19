@@ -12,7 +12,7 @@ export default {
 </script>
 
 <template>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <nav class="navbar navbar-expand-lg py-4 navbar-dark bg-dark">
     <div class="container">
       <a class="navbar-brand" href="#">Navbar</a>
       <button
@@ -26,11 +26,13 @@ export default {
       >
         <span class="navbar-toggler-icon"></span>
       </button>
+      
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
         <!-- Menu -->
-        <ul class="navbar-nav py-2 ms-auto mb-2 me-3 mb-lg-0">
-          <li class="nav-item">
+        <ul class="navbar-nav ms-auto me-4 mb-lg-0">
+
+          <li class="nav-item me-2">
             <a class="nav-link active" aria-current="page" href="#">Home</a>
           </li>
 
@@ -38,7 +40,7 @@ export default {
             <a class="nav-link" href="#">Link</a>
           </li>
 
-          <li class="nav-item dropdown">
+          <!-- <li class="nav-item dropdown">
             <a
               class="nav-link dropdown-toggle"
               href="#"
@@ -50,14 +52,13 @@ export default {
               Dropdown
             </a>
 
-            <!-- Dropdown -->
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
               <li><a class="dropdown-item" href="#">Action</a></li>
               <li><a class="dropdown-item" href="#">Another action</a></li>
               <li><hr class="dropdown-divider" /></li>
               <li><a class="dropdown-item" href="#">Something else here</a></li>
             </ul>
-          </li>
+          </li> -->
         </ul>
 
         <!-- Toogle Darkmode -->
@@ -71,7 +72,7 @@ export default {
         </div> -->
 
         <!-- Login button -->
-        <button class="btn btn-sm btn-success mx-3"><i class="fa-solid fa-right-to-bracket me-1"></i> Login</button>
+        <button class="btn btn-sm btn-success me-4"><i class="fa-solid fa-right-to-bracket me-1"></i> Login</button>
 
         <!-- Avatar -->
         <div
@@ -88,6 +89,7 @@ export default {
           </p>
           <p v-else><i class="fa-solid fa-user pt-3 text-light"></i></p>
         </div>
+
       </div>
     </div>
   </nav>
@@ -100,6 +102,7 @@ export default {
 }
 
 .nav-item {
-    margin: 0 15px;
+    font-weight: 600;
 }
+
 </style>
