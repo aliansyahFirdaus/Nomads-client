@@ -49,11 +49,13 @@ export default {
 </script>
 
 <template>
+
   <NavbarComponent />
+
   <div class="container">
     <div class="row mt-5">
+      <!-- Form Book -->
       <div class="col-8 pe-5">
-        <!-- Form Book -->
         <h3 style="font-weight: 800">Booking Submitions</h3>
         <hr />
         <form class="mt-5">
@@ -264,6 +266,8 @@ export default {
           </div>
         </form>
       </div>
+
+      <!-- Your book Detail -->
       <div class="col">
         <h3 style="font-weight: 800">Your Booking</h3>
         <div class="row border mt-3 p-3">
@@ -293,7 +297,7 @@ export default {
               <div v-if="child > 0">
                 <hr />
                 <p style="font-weight: 800; margin-top: 10px">
-                  Number of Childer: {{ childer }}
+                  Number of Child: {{ child }}
                 </p>
               </div>
               <div v-if="infant > 0">
