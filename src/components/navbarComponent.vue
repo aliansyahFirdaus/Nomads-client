@@ -79,7 +79,7 @@ export default {
           data-bs-target="#login"
         >
           <i class="fa-solid fa-right-to-bracket me-1"></i>
-          Login
+          Login/Register
         </button>
 
         <!-- Avatar -->

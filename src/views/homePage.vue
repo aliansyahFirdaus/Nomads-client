@@ -6,15 +6,22 @@ import CardTravelHorizon from "../components/cardTravelHorizon.vue";
 import TitlePrimary from "../components/titlePrimary.vue";
 import SubHeading from "../components/subHeading.vue";
 import LoginPage from "./loginPage.vue";
+import { mapActions, mapState, mapStores, mapWritableState } from "pinia";
+import { destination } from "../stores/destination";
+import { login } from "../stores/login";
+import { register } from "../stores/register";
 export default {
   data() {
     return {
-      data: [1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3],
       length: 4,
       loading: false,
+      destination: [],
     };
   },
   methods: {
+    ...mapActions(destination, ["getAllDestination"]),
+    ...mapActions(login, ["loginProcess"]),
+    ...mapActions(register, ["registerProcess"]),
     loadMore() {
       this.loading = true;
       setTimeout(() => {
@@ -25,9 +32,21 @@ export default {
     },
   },
   computed: {
-    companiesLoaded() {
+    ...mapWritableState(login, ["email", "password", "isLogin"]),
+    ...mapWritableState(register, [
+      "firstName",
+      "lastName",
+      "phoneNumber",
+      "passwordRegister",
+      "emailRegister",
+    ]),
+    ...mapState(destination, ["data"]),
+    destinationLoaded() {
       return this.data.slice(0, this.length);
     },
+  },
+  created() {
+    this.getAllDestination();
   },
   componens: {},
   components: {
@@ -236,7 +255,11 @@ export default {
       <!-- Card -->
       <div class="col">
         <div class="row list-prod d-flex justify-content-center">
-          <CardTravelHorizon v-for="view in companiesLoaded" />
+          <CardTravelHorizon
+            v-for="destination in destinationLoaded"
+            :data="destination"
+            :key="destination.id"
+          />
         </div>
       </div>
 
@@ -278,32 +301,38 @@ export default {
 
                 <!-- Email -->
                 <div class="mb-3">
-                  <label for="exampleInputEmail1" class="form-label"
+                  <label for="emailLogin" class="form-label"
                     >Email address</label
                   >
                   <input
                     type="email"
                     class="form-control"
-                    id="exampleInputEmail1"
-                    aria-describedby="emailHelp"
+                    id="emailLogin"
+                    v-model="email"
                   />
                 </div>
 
                 <!-- Password -->
                 <div class="mb-4">
-                  <label for="exampleInputPassword1" class="form-label"
-                    >Password</label
-                  >
+                  <label for="passwordLogin" class="form-label">Password</label>
                   <input
                     type="password"
                     class="form-control"
-                    id="exampleInputPassword1"
+                    id="passwordLogin"
+                    v-model="password"
                   />
                 </div>
 
                 <!-- Button Submit -->
                 <div class="row px-2" style="margin-top: 30px">
-                  <button type="submit" class="btn btn-primary">Login</button>
+                  <button
+                    type="submit"
+                    class="btn btn-primary"
+                    @click.prevent="loginProcess"
+                    :data-bs-dismiss="isLogin === true ? 'modal' : ''"
+                  >
+                    Login
+                  </button>
                 </div>
 
                 <!-- Direct -->
@@ -344,33 +373,33 @@ export default {
             <div class="col d-flex align-items-center justify-content-center">
               <form style="width: 400px">
                 <!-- Headline -->
-                <h1 class="mb-5 text-center" style="font-weight: 800">Register</h1>
+                <h1 class="mb-5 text-center" style="font-weight: 800">
+                  Register
+                </h1>
 
                 <!-- Firstname Lastname -->
                 <div class="row">
                   <div class="col">
                     <div class="mb-4">
-                      <label for="exampleInputEmail1" class="form-label"
+                      <label for="firstName" class="form-label"
                         >First Name</label
                       >
                       <input
-                        type="email"
+                        type="text"
                         class="form-control"
-                        id="exampleInputEmail1"
-                        aria-describedby="emailHelp"
+                        id="firstName"
+                        v-model="firstName"
                       />
                     </div>
                   </div>
                   <div class="col">
                     <div class="mb-4">
-                      <label for="exampleInputEmail1" class="form-label"
-                        >Last Name</label
-                      >
+                      <label for="lastName" class="form-label">Last Name</label>
                       <input
-                        type="email"
+                        type="text"
                         class="form-control"
-                        id="exampleInputEmail1"
-                        aria-describedby="emailHelp"
+                        id="lastName"
+                        v-model="lastName"
                       />
                     </div>
                   </div>
@@ -378,42 +407,44 @@ export default {
 
                 <!-- Email -->
                 <div class="mb-4">
-                  <label for="exampleInputEmail1" class="form-label"
+                  <label for="emailRegister" class="form-label"
                     >Email address</label
                   >
                   <input
                     type="email"
                     class="form-control"
-                    id="exampleInputEmail1"
-                    aria-describedby="emailHelp"
+                    id="emailRegister"
+                    v-model="emailRegister"
                   />
                 </div>
 
                 <!-- Password -->
                 <div class="mb-4">
-                  <label for="exampleInputPassword1" class="form-label"
+                  <label for="passwordRegister" class="form-label"
                     >Password</label
                   >
                   <input
                     type="password"
                     class="form-control"
-                    id="exampleInputPassword1"
+                    id="passwordRegister"
+                    v-model="passwordRegister"
                   />
                 </div>
 
                 <!-- Phone Number -->
                 <div class="mb-4">
-                  <label for="exampleInputPassword1" class="form-label"
+                  <label for="phoneNumber" class="form-label"
                     >Phone Number</label
                   >
                   <div class="input-group mb-3">
-                    <span class="input-group-text" id="basic-addon1">+62</span>
+                    <span class="input-group-text" id="phone">+62</span>
                     <input
                       type="text"
                       class="form-control"
-                      placeholder="Username"
-                      aria-label="Username"
-                      aria-describedby="basic-addon1"
+                      placeholder="6289666934400"
+                      aria-label="phoneNumber"
+                      aria-describedby="phone"
+                      v-model="phoneNumber"
                     />
                   </div>
                 </div>
@@ -432,7 +463,11 @@ export default {
 
                 <!-- Botton Submit -->
                 <div class="row px-2" style="margin-top: 30px">
-                  <button type="submit" class="btn btn-primary">
+                  <button
+                    type="submit"
+                    class="btn btn-primary"
+                    @click.prevent="registerProcess"
+                  >
                     Register
                   </button>
                 </div>
