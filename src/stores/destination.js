@@ -23,7 +23,4 @@ export const destination = defineStore({
       }
     },
   },
-  getter: {
-
-  },
 });

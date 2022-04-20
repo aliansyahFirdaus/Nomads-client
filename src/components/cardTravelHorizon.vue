@@ -1,4 +1,7 @@
 <script>
+import { mapActions } from "pinia";
+import { destinationById } from "../stores/detailDestination";
+
 export default {
   data() {
     return {
@@ -20,6 +23,7 @@ export default {
     },
   },
   methods: {
+    ...mapActions(destinationById, ["getDestinationById"]),
     getISOCountry(country) {
       const isoCountries = {
         AF: "Afghanistan",
@@ -269,11 +273,17 @@ export default {
         ZW: "Zimbabwe",
       };
 
-      return Object.keys(isoCountries).find((key) => isoCountries[key] === country).toLowerCase()
+      return Object.keys(isoCountries)
+        .find((key) => isoCountries[key] === country)
+        .toLowerCase();
     },
-    flag(country){
-      return `https://flagcdn.com/w20/${this.getISOCountry(country)}.png`
-    }
+    flag(country) {
+      return `https://flagcdn.com/w20/${this.getISOCountry(country)}.png`;
+    },
+    toDetailPage() {
+      // this.getDestinationById(1)
+      this.$router.push({ name: "detail-page", params: { id: this.data.id } });
+    },
   },
 };
 </script>
@@ -293,9 +303,16 @@ export default {
         <div class="row">
           <div class="col">
             <div class="row">
-              <h4 class="tour-name" style="font-weight: 800">{{ data.city }}</h4>
+              <!-- <router-link
+                class="text-decoration-none tour-name"
+                :to="{ name: 'detail-page', params: { id: data.id } }"
+              > -->
+              <h4 style="font-weight: 800; cursor: pointer;" @click="toDetailPage">
+                {{ data.city }}
+              </h4>
+              <!-- </router-link> -->
               <div class="col-2 me-1">
-                <img :src="flag(this.data.country)" />
+                <img :src="flag(data.country)" />
               </div>
               <div class="col">
                 <p class="card-text">{{ data.country }}</p>
@@ -395,10 +412,11 @@ export default {
 
 .tour-name {
   cursor: pointer;
+  color: black !important;
 }
 
 .tour-name:hover {
-  color: blueviolet;
+  color: blueviolet !important;
 }
 
 .fa-heart {
