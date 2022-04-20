@@ -1,5 +1,5 @@
 <script>
-import { mapActions, mapState } from "pinia";
+import { mapActions, mapState, mapWritableState } from "pinia";
 import { booking } from "../stores/booking";
 import NavbarComponent from "../components/navbarComponent.vue";
 import { destinationById } from "../stores/detailDestination";
@@ -10,6 +10,8 @@ export default {
   },
   methods: {
     ...mapActions(destinationById, ["getDestinationById"]),
+    ...mapActions(booking, ["createDestinationBooking"]),
+
     priceFormater(price) {
       let priceFormat = new Intl.NumberFormat("id-ID", {
         style: "currency",
@@ -17,29 +19,29 @@ export default {
       }).format(price);
       return priceFormat;
     },
-    discountCalculate() {
-      if (this.discount > 0) {
-        let disc = this.discount / 100;
-        let priceDisc = disc * this.destination.price;
-        let finalPrice = this.destination.price - priceDisc;
-        return finalPrice;
-      } else {
-        return this.destination.price;
-      }
-    },
-    total() {
-      let tax = this.discount / 100;
-      let priceDisc = tax * discountCalculate();
-      let finalPrice = discountCalculate() - priceDisc;
-      return finalPrice;
-    },
   },
   computed: {
-    ...mapState(booking, ["adult", "child", "infant", "discount"]),
+    ...mapWritableState(booking, [
+      "paymentMethod",
+
+      "price",
+      "discount",
+      "tax",
+
+      "child",
+      "adult",
+      "infant",
+      "firstName",
+      "lastName",
+      "phoneNumber",
+      "email",
+      "addressLine",
+      "city",
+      "zipCode",
+      "specialRequirement",
+    ]),
     ...mapState(destinationById, ["destination"]),
-    adultPrice() {
-      return this.destination.price * this.adult;
-    },
+    ...mapState(booking, ["total", "discountCalculate", "personCalculate"])
   },
   components: { NavbarComponent },
   created() {
@@ -49,7 +51,6 @@ export default {
 </script>
 
 <template>
-
   <NavbarComponent />
 
   <div class="container">
@@ -69,6 +70,7 @@ export default {
                   class="form-control"
                   id="firstName"
                   placeholder="Mark"
+                  v-model="firstName"
                 />
               </div>
 
@@ -80,6 +82,7 @@ export default {
                   class="form-control"
                   id="email"
                   placeholder="markmanson@gmail.com"
+                  v-model="email"
                 />
               </div>
 
@@ -91,6 +94,7 @@ export default {
                   class="form-control"
                   id="adress-line"
                   placeholder="4919 Godfrey Road"
+                  v-model="addressLine"
                 />
               </div>
             </div>
@@ -103,6 +107,7 @@ export default {
                   class="form-control"
                   id="lastname"
                   placeholder="Manson"
+                  v-model="lastName"
                 />
               </div>
 
@@ -131,6 +136,7 @@ export default {
                     class="form-control"
                     id="city"
                     placeholder="Jombang"
+                    v-model="city"
                   />
                 </div>
 
@@ -143,6 +149,7 @@ export default {
                       class="form-control"
                       id="zip"
                       placeholder="16300"
+                      v-model="zipCode"
                     />
                   </div>
                 </div>
@@ -157,6 +164,7 @@ export default {
                 id="exampleFormControlTextarea1"
                 rows="5"
                 placeholder="Special Requirement"
+                v-model="specialRequirement"
               ></textarea>
             </div>
           </div>
@@ -172,10 +180,11 @@ export default {
                 <input
                   class="form-check-input"
                   type="radio"
-                  name="flexRadioDefault"
-                  id="flexRadioDefault1"
+                  value="Bank Transfer"
+                  id="BankTransfer"
+                  v-model="paymentMethod"
                 />
-                <label class="form-check-label" for="flexRadioDefault1">
+                <label class="form-check-label" for="BankTransfer">
                   Bank Transfer
                   <!-- <img
                 src="https://upload.wikimedia.org/wikipedia/id/thumb/e/e4/ATM_PRIMA.png/1200px-ATM_PRIMA.png"
@@ -190,11 +199,12 @@ export default {
                 <input
                   class="form-check-input"
                   type="radio"
-                  name="flexRadioDefault"
-                  id="flexRadioDefault1"
+                  value="Gopay"
+                  id="Gopay"
+                  v-model="paymentMethod"
                 />
-                <label class="form-check-label" for="flexRadioDefault1">
-                  Bank Transfer
+                <label class="form-check-label" for="Gopay">
+                  Gopay
                   <!-- <img
                 src="https://upload.wikimedia.org/wikipedia/id/thumb/e/e4/ATM_PRIMA.png/1200px-ATM_PRIMA.png"
                 width="70"
@@ -208,10 +218,11 @@ export default {
                 <input
                   class="form-check-input"
                   type="radio"
-                  name="flexRadioDefault"
-                  id="flexRadioDefault1"
+                  value="Dana"
+                  id="Dana"
+                  v-model="paymentMethod"
                 />
-                <label class="form-check-label" for="flexRadioDefault1">
+                <label class="form-check-label" for="Dana">
                   Bank Transfer
                   <!-- <img
                 src="https://upload.wikimedia.org/wikipedia/id/thumb/e/e4/ATM_PRIMA.png/1200px-ATM_PRIMA.png"
@@ -226,10 +237,11 @@ export default {
                 <input
                   class="form-check-input"
                   type="radio"
-                  name="flexRadioDefault"
-                  id="flexRadioDefault1"
+                  value="Indomart"
+                  id="Indomart"
+                  v-model="paymentMethod"
                 />
-                <label class="form-check-label" for="flexRadioDefault1">
+                <label class="form-check-label" for="Indomart">
                   Bank Transfer
                   <!-- <img
                 src="https://upload.wikimedia.org/wikipedia/id/thumb/e/e4/ATM_PRIMA.png/1200px-ATM_PRIMA.png"
@@ -242,14 +254,8 @@ export default {
 
             <!-- Terms and Condition -->
             <div class="form-check">
-              <input
-                class="form-check-input"
-                type="checkbox"
-                value=""
-                id="flexCheckChecked"
-                checked
-              />
-              <label class="form-check-label" for="flexCheckChecked">
+              <input class="form-check-input" type="checkbox" id="tnc" />
+              <label class="form-check-label" for="tnc">
                 <p>
                   I have read and accept the <a href="#">Terms Condition</a> and
                   <a href="#"> Privacy Policy </a>
@@ -260,7 +266,14 @@ export default {
             <!-- Submit Button -->
             <div class="col-4 mt-4 mb-5">
               <div class="row">
-                <button class="btn btn-dark" style="border-radius: 0 !important; font-weight: 800;">Submit</button>
+                <a
+                  href="https://app.sandbox.midtrans.com/snap/snap.js"
+                  class="btn btn-dark"
+                  style="border-radius: 0 !important; font-weight: 800"
+                  @click.prevent="createDestinationBooking"
+                >
+                  Submit
+                </a>
               </div>
             </div>
           </div>
@@ -318,12 +331,12 @@ export default {
             <h5 style="font-weight: 800">Pay Amount</h5>
           </div>
           <div class="col p-4 text-end">
-            <p>{{ priceFormater(adultPrice) }}</p>
+            <p>{{ priceFormater(personCalculate) }}</p>
             <p>{{ discount }}%</p>
-            <p>{{ priceFormater(discountCalculate()) }}</p>
+            <p>{{ priceFormater(discountCalculate) }}</p>
             <p>0%</p>
             <h5 style="font-weight: 800">
-              {{ priceFormater(discountCalculate()) }}
+              {{ priceFormater(total) }}
             </h5>
           </div>
         </div>

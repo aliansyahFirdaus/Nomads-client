@@ -9,13 +9,15 @@ export default {
     return {};
   },
   computed: {
-    ...mapWritableState(booking, ["adult", "child", "infant"]),
+    ...mapWritableState(booking, ["adult", "child", "infant", "price"]),
     ...mapState(destinationById, ["destination"]),
     priceFormater() {
-      return (this.destination.price = new Intl.NumberFormat("id-ID", {
+      let newPrice = new Intl.NumberFormat("id-ID", {
         style: "currency",
         currency: "IDR",
-      }).format(this.destination.price));
+      }).format(this.destination.price);
+
+      return newPrice;
     },
     dateFormater() {
       return this.destination.departure;
@@ -32,6 +34,7 @@ export default {
     ]),
     ...mapActions(destinationById, ["getDestinationById"]),
     toBookingPage() {
+      this.price = this.destination.price;
       this.$router.push({ name: "booking-page" });
     },
   },

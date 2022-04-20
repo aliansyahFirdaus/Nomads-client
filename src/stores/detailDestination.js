@@ -10,15 +10,12 @@ export const destinationById = defineStore({
   }),
   actions: {
     async getDestinationById(id) {
-      console.log(id);
       try {
         const response = await axios.get(`${BASE_URL}/destination/${id}`, {
           headers: {
             access_token: localStorage.access_token,
           },
         });
-        console.log(response.data);
-        console.log("hai");
         this.destination = response.data.data;
       } catch (err) {
         console.log(err);

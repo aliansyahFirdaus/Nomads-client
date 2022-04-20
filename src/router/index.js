@@ -8,7 +8,8 @@ import ProfilePage from "../views/profilePage.vue";
 import Detailpage from "../views/detailTourPage.vue";
 import TagPage from "../views/tagPage.vue";
 import CountryPage from "../views/countryPage.vue";
-import BookingPage from "../views/bookingPage.vue"
+import BookingPage from "../views/bookingPage.vue";
+import BookingSuccessPage from "../views/bookingSuccessPage.vue";
 
 const routes = [
   // { path: "/login", name: "login-page", component: LoginPage },
@@ -20,6 +21,11 @@ const routes = [
   { path: "/detail/:id", name: "detail-page", component: Detailpage },
   { path: "/tag/:name", name: "tag-page", component: TagPage },
   { path: "/country/:name", name: "contry-page", component: CountryPage },
+  {
+    path: "/booking-success/:name",
+    name: "booking-success-page",
+    component: BookingSuccessPage,
+  },
 ];
 
 const router = createRouter({
