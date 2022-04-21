@@ -26,6 +26,7 @@
                   list="datalistOptions"
                   id="exampleDataList"
                   placeholder="Search"
+                  required
                 />
 
                 <datalist id="datalistOptions">

@@ -1,4 +1,5 @@
 import { defineStore } from "pinia";
+import router from "../router";
 import axios from "axios";
 
 const BASE_URL = "http://localhost:3000";
@@ -24,56 +25,49 @@ export const booking = defineStore({
     city: "",
     zipCode: "",
     specialRequirement: "",
+    destinationId: 0,
 
     bookingByNumber: {},
   }),
 
   getters: {
-    personCalculate() {
-      let priceCal = 0;
-
-      if (this.child > 0) {
-        priceCal += (this.price * this.child) / 2;
-      } else {
-        this.price + 0;
-      }
-
-      if (this.infant > 0) {
-        priceCal += (this.price * this.infant) / 3;
-      } else {
-        this.price + 0;
-      }
-
-      if (this.adult > 0) {
-        priceCal += this.price * this.adult;
-      } else {
-        this.price + 0;
-      }
-
-      console.log(this.price);
-
-      return (this.price = priceCal);
-    },
-
-    discountCalculate() {
-      if (this.discount > 0) {
-        let disc = this.discount / 100;
-        let priceDisc = disc * this.personCalculate;
-        return this.personCalculate - priceDisc;
-      } else {
-        return this.personCalculate;
-      }
-    },
-
-    total() {
-      if (this.tax > 0) {
-        let tax = this.tax / 100;
-        let priceDisc = tax * this.discountCalculate;
-        return this.discountCalculate - priceDisc;
-      } else {
-        return this.discountCalculate;
-      }
-    },
+    // personCalculate() {
+    //   let priceCal = 0;
+    //   if (this.child > 0) {
+    //     priceCal += (this.price * this.child) / 2;
+    //   } else {
+    //     this.price + 0;
+    //   }
+    //   if (this.infant > 0) {
+    //     priceCal += (this.price * this.infant) / 3;
+    //   } else {
+    //     this.price + 0;
+    //   }
+    //   if (this.adult > 0) {
+    //     priceCal += this.price * this.adult;
+    //   } else {
+    //     this.price + 0;
+    //   }
+    //   return (this.price = priceCal);
+    // },
+    // discountCalculate() {
+    //   if (this.discount > 0) {
+    //     let disc = this.discount / 100;
+    //     let priceDisc = disc * this.personCalculate;
+    //     return this.personCalculate - priceDisc;
+    //   } else {
+    //     return this.personCalculate;
+    //   }
+    // },
+    // total() {
+    //   if (this.tax > 0) {
+    //     let tax = this.tax / 100;
+    //     let priceDisc = tax * this.discountCalculate;
+    //     return this.discountCalculate - priceDisc;
+    //   } else {
+    //     return this.discountCalculate;
+    //   }
+    // },
   },
 
   actions: {
@@ -95,8 +89,52 @@ export const booking = defineStore({
     infantDecrement() {
       this.infant--;
     },
+
+    personCalculate(price) {
+      let priceCal = 0;
+
+      if (this.child > 0) {
+        priceCal += (price * this.child) / 2;
+      } else {
+        price + 0;
+      }
+
+      if (this.infant > 0) {
+        priceCal += (price * this.infant) / 3;
+      } else {
+        price + 0;
+      }
+
+      if (this.adult > 0) {
+        priceCal += price * this.adult;
+      } else {
+        price + 0;
+      }
+
+      return (this.price = priceCal);
+    },
+    discountCalculate() {
+      if (this.discount > 0) {
+        let disc = this.discount / 100;
+        let priceDisc = disc * this.price;
+        return this.price - priceDisc;
+      } else {
+        return this.price;
+      }
+    },
+    total() {
+      if (this.tax > 0) {
+        let tax = this.tax / 100;
+        let priceDisc = tax * this.discountCalculate();
+        return this.discountCalculate() - priceDisc;
+      } else {
+        return this.discountCalculate();
+      }
+    },
+
     async createDestinationBooking() {
       try {
+        console.log(router);
         const response = await axios.post(
           `${BASE_URL}/booking`,
           {
@@ -112,8 +150,9 @@ export const booking = defineStore({
             city: this.city,
             zipCode: this.zipCode,
             specialRequirement: this.specialRequirement,
-            totalPayment: this.total,
+            totalPayment: this.total(),
             discount: this.discount,
+            destinationId: this.destinationId,
           },
           {
             headers: {
@@ -122,11 +161,9 @@ export const booking = defineStore({
           }
         );
 
-        console.log(response);
-
-        this.routes.push({
+        router.push({
           name: "booking-success-page",
-          params: `${response.data.numberBooking}`,
+          params: { name: `${response.data.data.numberBooking}` },
         });
       } catch (err) {
         console.log(err);

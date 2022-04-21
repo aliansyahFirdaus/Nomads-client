@@ -1,15 +1,44 @@
 <script>
-import { mapActions, mapState } from "pinia";
+import { mapActions, mapState, mapWritableState } from "pinia";
 import { booking } from "../stores/booking";
+import { destinationById } from "../stores/detailDestination";
 import NavbarComponent from "../components/navbarComponent.vue";
 
 export default {
   components: { NavbarComponent },
   computed: {
     ...mapState(booking, ["bookingByNumber"]),
+    ...mapWritableState(booking, [
+      "paymentMethod",
+
+      "price",
+      "discount",
+      "tax",
+
+      "child",
+      "adult",
+      "infant",
+      "firstName",
+      "lastName",
+      "phoneNumber",
+      "email",
+      "addressLine",
+      "city",
+      "zipCode",
+      "specialRequirement",
+    ]),
+    ...mapState(booking, ["total", "discountCalculate", "personCalculate"]),
   },
   methods: {
+    ...mapActions(destinationById, ["getDestinationById"]),
     ...mapActions(booking, ["getDestinationByNumber"]),
+    priceFormater(price) {
+      let priceFormat = new Intl.NumberFormat("id-ID", {
+        style: "currency",
+        currency: "IDR",
+      }).format(price);
+      return priceFormat;
+    },
   },
   created() {
     this.getDestinationByNumber(this.$route.params.name);
@@ -19,7 +48,7 @@ export default {
 
 <template>
   <NavbarComponent />
-  <div class="container">
+  <div class="container" style="margin-top: 180px">
     <!-- Message Notification -->
     <div class="row mt-5">
       <div class="col-1">
@@ -35,7 +64,9 @@ export default {
         </h3>
         <p>
           Booking details has been sent to:
-          <strong>{{ bookingByNumber.email }}</strong>
+          <strong
+            ><u>{{ bookingByNumber.email }}</u></strong
+          >
         </p>
       </div>
       <div class="col-4" style="border-left: 4px solid blueviolet">
@@ -53,7 +84,7 @@ export default {
     </div>
 
     <!-- Table -->
-    <div class="row mt-5">
+    <div class="row" style="margin-top: 70px; margin-bottom: 100px">
       <div class="col-7 border" style="padding: 40px">
         <h2>Your information</h2>
         <table class="table mt-5">
@@ -90,9 +121,66 @@ export default {
         </table>
       </div>
 
-      <div class="col border ms-4" style="padding: 40px">
+      <!-- <div class="col border ms-4" style="padding: 40px">
         <h2>Your item</h2>
-      </div>
+        <div class="row border mt-3 p-3">
+          <div class="col p-4">
+            <h5>Lorem ipsum dolor sit amet consectetur</h5>
+            <p style="color: #92a9bd; font-size: 17px; margin-top: 15px">
+              <i class="fa-solid fa-map-pin me-3"></i>{{ destination.city }},
+              {{ destination.country }}
+            </p>
+          </div>
+          <div class="col-4 d-flex align-items-center justify-content-center">
+            <img src="https://dummyimage.com/100x100/000/fff" alt="" />
+          </div>
+        </div>
+        <div class="row border p-3" style="border-top: 0 !important">
+          <div class="col p-4">
+            <p>Type tour : {{ destination.typeTour }}</p>
+            <p>Departure : {{ destination.departure }}</p>
+            <p>Duration : {{ destination.day }}</p>
+            <div
+              class="row py-2 px-4"
+              style="background-color: #e6e6e6; margin-top: 30px"
+            >
+              <p style="font-weight: 800; margin-top: 10px" v-if="adult > 0">
+                Number of Adult: {{ adult }}
+              </p>
+              <div v-if="child > 0">
+                <hr />
+                <p style="font-weight: 800; margin-top: 10px">
+                  Number of Child: {{ child }}
+                </p>
+              </div>
+              <div v-if="infant > 0">
+                <hr />
+                <p style="font-weight: 800; margin-top: 10px">
+                  Number of Infant: {{ infant }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row border p-3" style="border-top: 0 !important">
+          <div class="col p-4">
+            <p>Adult price</p>
+            <p>Discount</p>
+            <p>Subtotal</p>
+            <p>Tax</p>
+            <h5 style="font-weight: 800">Pay Amount</h5>
+          </div>
+          <div class="col p-4 text-end">
+            <p>{{ priceFormater(personCalculate) }}</p>
+            <p>{{ discount }}%</p>
+            <p>{{ priceFormater(discountCalculate) }}</p>
+            <p>0%</p>
+            <h5 style="font-weight: 800">
+              {{ priceFormater(total) }}
+            </h5>
+          </div>
+        </div>
+      </div> -->
     </div>
   </div>
 </template>

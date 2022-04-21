@@ -1,16 +1,19 @@
 <script>
 import { mapActions, mapState, mapWritableState } from "pinia";
 import { booking } from "../stores/booking";
-import NavbarComponent from "../components/navbarComponent.vue";
 import { destinationById } from "../stores/detailDestination";
+
+import NavbarComponent from "../components/navbarComponent.vue";
 
 export default {
   data() {
-    return {};
+    return {
+      people: {}
+    };
   },
   methods: {
     ...mapActions(destinationById, ["getDestinationById"]),
-    ...mapActions(booking, ["createDestinationBooking"]),
+    ...mapActions(booking, ["createDestinationBooking", "personCalculate", "discountCalculate", "total"]),
 
     priceFormater(price) {
       let priceFormat = new Intl.NumberFormat("id-ID", {
@@ -28,9 +31,6 @@ export default {
       "discount",
       "tax",
 
-      "child",
-      "adult",
-      "infant",
       "firstName",
       "lastName",
       "phoneNumber",
@@ -39,13 +39,15 @@ export default {
       "city",
       "zipCode",
       "specialRequirement",
+      "destinationId"
     ]),
     ...mapState(destinationById, ["destination"]),
-    ...mapState(booking, ["total", "discountCalculate", "personCalculate"])
+    ...mapState(booking, ["adult", "child", "infant"])
   },
   components: { NavbarComponent },
   created() {
     this.getDestinationById(this.$route.params.id);
+    this.destinationId = this.$route.params.id
   },
 };
 </script>
@@ -53,7 +55,7 @@ export default {
 <template>
   <NavbarComponent />
 
-  <div class="container">
+  <div class="container" style="margin-top: 200px;">
     <div class="row mt-5">
       <!-- Form Book -->
       <div class="col-8 pe-5">
@@ -71,6 +73,7 @@ export default {
                   id="firstName"
                   placeholder="Mark"
                   v-model="firstName"
+                  required
                 />
               </div>
 
@@ -83,6 +86,7 @@ export default {
                   id="email"
                   placeholder="markmanson@gmail.com"
                   v-model="email"
+                  required
                 />
               </div>
 
@@ -90,6 +94,7 @@ export default {
               <div class="mb-5">
                 <label for="adress-line" class="form-label">Address line</label>
                 <input
+                required
                   type="text"
                   class="form-control"
                   id="adress-line"
@@ -103,6 +108,7 @@ export default {
               <div class="mb-5">
                 <label for="lastname" class="form-label">Last Name</label>
                 <input
+                required
                   type="text"
                   class="form-control"
                   id="lastname"
@@ -117,6 +123,7 @@ export default {
                 <div class="input-group mb-3">
                   <span class="input-group-text" id="phone">+62</span>
                   <input
+                  required
                     type="text"
                     class="form-control"
                     placeholder="6289666934400"
@@ -132,6 +139,7 @@ export default {
                 <div class="col">
                   <label for="city" class="form-label">City</label>
                   <input
+                  required
                     type="text"
                     class="form-control"
                     id="city"
@@ -145,6 +153,7 @@ export default {
                   <div>
                     <label for="zip" class="form-label">Zip code</label>
                     <input
+                    required
                       type="text"
                       class="form-control"
                       id="zip"
@@ -178,6 +187,7 @@ export default {
             <div class="row mt-4" style="margin-bottom: 60px">
               <div class="form-check">
                 <input
+                required
                   class="form-check-input"
                   type="radio"
                   value="Bank Transfer"
@@ -197,6 +207,7 @@ export default {
             <div class="row" style="margin-bottom: 60px">
               <div class="form-check">
                 <input
+                required
                   class="form-check-input"
                   type="radio"
                   value="Gopay"
@@ -216,6 +227,7 @@ export default {
             <div class="row" style="margin-bottom: 60px">
               <div class="form-check">
                 <input
+                required
                   class="form-check-input"
                   type="radio"
                   value="Dana"
@@ -235,6 +247,7 @@ export default {
             <div class="row" style="margin-bottom: 50px">
               <div class="form-check">
                 <input
+                required
                   class="form-check-input"
                   type="radio"
                   value="Indomart"
@@ -254,7 +267,7 @@ export default {
 
             <!-- Terms and Condition -->
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" id="tnc" />
+              <input class="form-check-input" type="checkbox" id="tnc" required />
               <label class="form-check-label" for="tnc">
                 <p>
                   I have read and accept the <a href="#">Terms Condition</a> and
@@ -267,7 +280,6 @@ export default {
             <div class="col-4 mt-4 mb-5">
               <div class="row">
                 <a
-                  href="https://app.sandbox.midtrans.com/snap/snap.js"
                   class="btn btn-dark"
                   style="border-radius: 0 !important; font-weight: 800"
                   @click.prevent="createDestinationBooking"
@@ -331,12 +343,12 @@ export default {
             <h5 style="font-weight: 800">Pay Amount</h5>
           </div>
           <div class="col p-4 text-end">
-            <p>{{ priceFormater(personCalculate) }}</p>
+            <p>{{ priceFormater(personCalculate(destination.price)) }}</p>
             <p>{{ discount }}%</p>
-            <p>{{ priceFormater(discountCalculate) }}</p>
+            <p>{{ priceFormater(discountCalculate()) }}</p>
             <p>0%</p>
             <h5 style="font-weight: 800">
-              {{ priceFormater(total) }}
+              {{ priceFormater(total()) }}
             </h5>
           </div>
         </div>

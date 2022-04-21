@@ -5,11 +5,10 @@ import FilterAdvance from "../components/filterAdvance.vue";
 import CardTravelHorizon from "../components/cardTravelHorizon.vue";
 import TitlePrimary from "../components/titlePrimary.vue";
 import SubHeading from "../components/subHeading.vue";
-import LoginPage from "./loginPage.vue";
-import { mapActions, mapState, mapStores, mapWritableState } from "pinia";
+
+import { mapActions, mapState } from "pinia";
 import { destination } from "../stores/destination";
-import { login } from "../stores/login";
-import { register } from "../stores/register";
+
 export default {
   data() {
     return {
@@ -20,8 +19,6 @@ export default {
   },
   methods: {
     ...mapActions(destination, ["getAllDestination"]),
-    ...mapActions(login, ["loginProcess"]),
-    ...mapActions(register, ["registerProcess"]),
     loadMore() {
       this.loading = true;
       setTimeout(() => {
@@ -32,14 +29,6 @@ export default {
     },
   },
   computed: {
-    ...mapWritableState(login, ["email", "password", "isLogin"]),
-    ...mapWritableState(register, [
-      "firstName",
-      "lastName",
-      "phoneNumber",
-      "passwordRegister",
-      "emailRegister",
-    ]),
     ...mapState(destination, ["data"]),
     destinationLoaded() {
       return this.data.slice(0, this.length);
@@ -56,13 +45,12 @@ export default {
     CardTravelHorizon,
     TitlePrimary,
     SubHeading,
-    LoginPage,
   },
 };
 </script>
 
 <template>
-  <NavbarComponent class="fixed-top" />
+  <NavbarComponent />
   <HeroComponent class="hero" />
 
   <!-- Main -->
@@ -279,218 +267,6 @@ export default {
       </div>
     </div>
   </div>
-
-  <!-- How to Payment -->
-
-  <!-- Login -->
-  <div
-    class="modal fade"
-    id="login"
-    tabindex="-1"
-    aria-labelledby="exampleModalLabel"
-    aria-hidden="true"
-  >
-    <div class="modal-dialog modal-dialog-centered modal-xl">
-      <div class="modal-content">
-        <div class="modal-body p-0">
-          <div class="row">
-            <div class="col d-flex align-items-center justify-content-center">
-              <form style="width: 400px">
-                <!-- Headline -->
-                <h1 class="mb-5" style="font-weight: 800">Login</h1>
-
-                <!-- Email -->
-                <div class="mb-3">
-                  <label for="emailLogin" class="form-label"
-                    >Email address</label
-                  >
-                  <input
-                    type="email"
-                    class="form-control"
-                    id="emailLogin"
-                    v-model="email"
-                  />
-                </div>
-
-                <!-- Password -->
-                <div class="mb-4">
-                  <label for="passwordLogin" class="form-label">Password</label>
-                  <input
-                    type="password"
-                    class="form-control"
-                    id="passwordLogin"
-                    v-model="password"
-                  />
-                </div>
-
-                <!-- Button Submit -->
-                <div class="row px-2" style="margin-top: 30px">
-                  <button
-                    type="submit"
-                    class="btn btn-primary"
-                    @click.prevent="loginProcess"
-                    :data-bs-dismiss="isLogin === true ? 'modal' : ''"
-                  >
-                    Login
-                  </button>
-                </div>
-
-                <!-- Direct -->
-                <div class="text-center mt-4">
-                  <p>
-                    You don't have an account?
-                    <a
-                      href="#"
-                      data-bs-toggle="modal"
-                      data-bs-target="#register"
-                      >Register!</a
-                    >
-                  </p>
-                </div>
-              </form>
-            </div>
-            <div class="col">
-              <img src="https://dummyimage.com/600x500/000/fff" alt="" />
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Register -->
-  <div
-    class="modal fade"
-    id="register"
-    tabindex="-1"
-    aria-labelledby="exampleModalLabel"
-    aria-hidden="true"
-  >
-    <div class="modal-dialog modal-dialog-centered modal-xl">
-      <div class="modal-content">
-        <div class="modal-body p-0">
-          <div class="row">
-            <div class="col d-flex align-items-center justify-content-center">
-              <form style="width: 400px">
-                <!-- Headline -->
-                <h1 class="mb-5 text-center" style="font-weight: 800">
-                  Register
-                </h1>
-
-                <!-- Firstname Lastname -->
-                <div class="row">
-                  <div class="col">
-                    <div class="mb-4">
-                      <label for="firstName" class="form-label"
-                        >First Name</label
-                      >
-                      <input
-                        type="text"
-                        class="form-control"
-                        id="firstName"
-                        v-model="firstName"
-                      />
-                    </div>
-                  </div>
-                  <div class="col">
-                    <div class="mb-4">
-                      <label for="lastName" class="form-label">Last Name</label>
-                      <input
-                        type="text"
-                        class="form-control"
-                        id="lastName"
-                        v-model="lastName"
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Email -->
-                <div class="mb-4">
-                  <label for="emailRegister" class="form-label"
-                    >Email address</label
-                  >
-                  <input
-                    type="email"
-                    class="form-control"
-                    id="emailRegister"
-                    v-model="emailRegister"
-                  />
-                </div>
-
-                <!-- Password -->
-                <div class="mb-4">
-                  <label for="passwordRegister" class="form-label"
-                    >Password</label
-                  >
-                  <input
-                    type="password"
-                    class="form-control"
-                    id="passwordRegister"
-                    v-model="passwordRegister"
-                  />
-                </div>
-
-                <!-- Phone Number -->
-                <div class="mb-4">
-                  <label for="phoneNumber" class="form-label"
-                    >Phone Number</label
-                  >
-                  <div class="input-group mb-3">
-                    <span class="input-group-text" id="phone">+62</span>
-                    <input
-                      type="text"
-                      class="form-control"
-                      placeholder="6289666934400"
-                      aria-label="phoneNumber"
-                      aria-describedby="phone"
-                      v-model="phoneNumber"
-                    />
-                  </div>
-                </div>
-
-                <!-- Remember Me -->
-                <!-- <div class="mb-4 form-check">
-                  <input
-                    type="checkbox"
-                    class="form-check-input"
-                    id="exampleCheck1"
-                  />
-                  <label class="form-check-label" for="exampleCheck1"
-                    >Check me out</label
-                  >
-                </div> -->
-
-                <!-- Botton Submit -->
-                <div class="row px-2" style="margin-top: 30px">
-                  <button
-                    type="submit"
-                    class="btn btn-primary"
-                    @click.prevent="registerProcess"
-                  >
-                    Register
-                  </button>
-                </div>
-
-                <!-- Direct -->
-                <div class="text-center mt-4">
-                  <p>
-                    You have an account?
-                    <a href="#" data-bs-toggle="modal" data-bs-target="#login"
-                      >Login!</a
-                    >
-                  </p>
-                </div>
-              </form>
-            </div>
-            <div class="col">
-              <img src="https://dummyimage.com/600x700/000/fff" alt="" />
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
 </template>
 
 <style scoped>
@@ -517,7 +293,7 @@ export default {
 .filter {
   right: 0;
   left: 0;
-  bottom: 240px;
+  top: 580px;
   position: absolute;
   border-radius: 20px;
 }

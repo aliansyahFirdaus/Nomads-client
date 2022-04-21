@@ -21,6 +21,8 @@ const routes = [
   { path: "/detail/:id", name: "detail-page", component: Detailpage },
   { path: "/tag/:name", name: "tag-page", component: TagPage },
   { path: "/country/:name", name: "contry-page", component: CountryPage },
+  { path: "/wishlist", name: "wishlist-page", component: ProfilePage },
+  { path: "/booklist", name: "booklist-page", component: ProfilePage },
   {
     path: "/booking-success/:name",
     name: "booking-success-page",
@@ -32,5 +34,11 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes,
 });
+
+router.beforeEach((to, from) => {
+  if (localStorage.access_token) {
+    
+  }
+})
 
 export default router;
