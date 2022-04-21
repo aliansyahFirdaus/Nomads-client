@@ -22,7 +22,6 @@ export const register = defineStore({
           password: this.passwordRegister,
           email: this.emailRegister,
         });
-        console.log(response);
       } catch (err) {
         console.log(err);
       }

@@ -6,19 +6,26 @@ import NavbarComponent from "../components/navbarComponent.vue";
 
 export default {
   data() {
-    return {};
+    return {
+      image: "",
+    };
   },
   computed: {
-    ...mapWritableState(booking, ["adult", "child", "infant"]),
+    ...mapWritableState(booking, ["adult", "child", "infant", "price"]),
     ...mapState(destinationById, ["destination"]),
     priceFormater() {
-      return (this.destination.price = new Intl.NumberFormat("id-ID", {
+      let newPrice = new Intl.NumberFormat("id-ID", {
         style: "currency",
         currency: "IDR",
-      }).format(this.destination.price));
+      }).format(this.destination.price);
+
+      return newPrice;
     },
     dateFormater() {
       return this.destination.departure;
+    },
+    imageGenerator() {
+      return (this.image = `https://source.unsplash.com/random/1920x500/?${this.destination.country}`);
     },
   },
   methods: {
@@ -32,6 +39,7 @@ export default {
     ]),
     ...mapActions(destinationById, ["getDestinationById"]),
     toBookingPage() {
+      this.price = this.destination.price;
       this.$router.push({ name: "booking-page" });
     },
   },
@@ -46,7 +54,9 @@ export default {
 <template>
   <NavbarComponent />
   <div class="container-fluid p-0" style="position: relative">
-    <img src="https://dummyimage.com/1930x500/000/fff" alt="" />
+    <div class="img-banner">
+      <img :src="imageGenerator" style="object-fit: cover" />
+    </div>
     <div
       class="container"
       style="position: absolute; top: 350px; right: 0; left: 0"
@@ -294,6 +304,14 @@ export default {
 <style scoped>
 .icon-detail h3 {
   font-size: 25px;
+}
+
+.img-banner {
+  background: linear-gradient(rgba(29, 37, 113, 0), rgb(0, 0, 0));
+}
+
+.img-banner img {
+  opacity: 0.4;
 }
 
 .menu-detail h5 {

@@ -1,22 +1,31 @@
 <script>
+import { mapActions, mapState } from "pinia";
+import { login } from "../stores/login";
+import { logout } from "../stores/logout";
 import LoginPage from "../views/loginPage.vue";
+import RegisterPage from "../views/registerPage.vue";
 export default {
   data() {
     return {
-      name: "Zoma",
+      name: localStorage.firstName,
+      token: localStorage.access_token,
     };
   },
   computed: {},
-  methods: {},
+  methods: {
+    ...mapActions(logout, ["logoutProcess"]),
+  },
   componens: {},
-  components: { LoginPage },
+  components: { LoginPage, RegisterPage },
 };
 </script>
 
 <template>
-  <nav class="navbar navbar-expand-lg py-4 navbar-dark bg-dark">
+  <nav class="navbar navbar-expand-lg py-3 navbar-dark bg-dark fixed-top">
     <div class="container">
-      <a class="navbar-brand" href="#">Navbar</a>
+      <router-link class="navbar-brand" to="/">
+        <img src="../assets/logo/logo-bw.png" alt="" width="70" height="64" />
+      </router-link>
       <button
         class="navbar-toggler"
         type="button"
@@ -33,54 +42,23 @@ export default {
         <!-- Menu -->
         <ul class="navbar-nav ms-auto me-4 mb-lg-0">
           <li class="nav-item me-2">
-            <a class="nav-link active" aria-current="page" href="#">Home</a>
+            <router-link class="nav-link active" aria-current="page" to="/"
+              >Home</router-link
+            >
           </li>
 
           <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
+            <router-link class="nav-link" aria-current="page" to="/wishlist"
+              >Wishlist</router-link
+            >
           </li>
 
-          <!-- <li class="nav-item dropdown">
-            <a
-              class="nav-link dropdown-toggle"
-              href="#"
-              id="navbarDropdown"
-              role="button"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
+          <li class="nav-item">
+            <router-link class="nav-link" aria-current="page" to="/booklist"
+              >Booking</router-link
             >
-              Dropdown
-            </a>
-
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" href="#">Action</a></li>
-              <li><a class="dropdown-item" href="#">Another action</a></li>
-              <li><hr class="dropdown-divider" /></li>
-              <li><a class="dropdown-item" href="#">Something else here</a></li>
-            </ul>
-          </li> -->
+          </li>
         </ul>
-
-        <!-- Toogle Darkmode -->
-        <!-- <div class="form-check form-switch mx-3">
-          <input
-            class="form-check-input"
-            type="checkbox"
-            role="switch"
-            id="flexSwitchCheckDefault"
-          />
-        </div> -->
-
-        <!-- Login button -->
-        <button
-          class="btn btn-sm btn-success me-4"
-          type="button"
-          data-bs-toggle="modal"
-          data-bs-target="#login"
-        >
-          <i class="fa-solid fa-right-to-bracket me-1"></i>
-          Login/Register
-        </button>
 
         <!-- Avatar -->
         <div
@@ -100,9 +78,55 @@ export default {
           </p>
           <p v-else><i class="fa-solid fa-user pt-3 text-light"></i></p>
         </div>
+
+        <!-- Greeting -->
+        <div class="div ms-4" v-if="token">
+          <div class="btn-group">
+            <button class="btn text-light btn-sm" type="button">
+              Hello! {{ name }}
+            </button>
+            <button
+              type="button"
+              class="btn btn-sm text-secondary dropdown-toggle dropdown-toggle-split"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              <span class="visually-hidden">Toggle Dropdown</span>
+            </button>
+            <ul class="dropdown-menu py-2 px-3" @click="logoutProcess">
+              <i
+                class="fa-solid fa-power-off me-2"
+                style="font-size: 14px; color: brown"
+              ></i>
+              Logout
+            </ul>
+          </div>
+        </div>
+
+        <!-- Login button -->
+        <button
+          class="btn btn-sm btn-success ms-4"
+          type="button"
+          data-bs-toggle="modal"
+          data-bs-target="#login"
+          v-else
+        >
+          <i class="fa-solid fa-right-to-bracket me-1"></i>
+          Login/Register
+        </button>
       </div>
     </div>
   </nav>
+
+  <!-- Login -->
+  <div class="modal" id="login" tabindex="-1" aria-hidden="true">
+    <LoginPage />
+  </div>
+
+  <!-- Register -->
+  <div class="modal fade" id="register" tabindex="-1" aria-hidden="true">
+    <RegisterPage />
+  </div>
 </template>
 
 <style scoped>

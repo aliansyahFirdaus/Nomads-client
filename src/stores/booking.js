@@ -1,4 +1,5 @@
 import { defineStore } from "pinia";
+import router from "../router";
 import axios from "axios";
 
 const BASE_URL = "http://localhost:3000";
@@ -6,14 +7,71 @@ const BASE_URL = "http://localhost:3000";
 export const booking = defineStore({
   id: "booking",
   state: () => ({
-    adult: 2,
-    child: 0,
-    infant: 0,
+    paymentMethod: "",
+
+    price: 0,
     discount: 30,
+    tax: 0,
+
+    totalPayment: 0,
+    child: 0,
+    adult: 1,
+    infant: 0,
+    firstName: "",
+    lastName: "",
+    phoneNumber: "",
+    email: "",
+    addressLine: "",
+    city: "",
+    zipCode: "",
+    specialRequirement: "",
+    destinationId: 0,
+
+    bookingByNumber: {},
   }),
+
+  getters: {
+    // personCalculate() {
+    //   let priceCal = 0;
+    //   if (this.child > 0) {
+    //     priceCal += (this.price * this.child) / 2;
+    //   } else {
+    //     this.price + 0;
+    //   }
+    //   if (this.infant > 0) {
+    //     priceCal += (this.price * this.infant) / 3;
+    //   } else {
+    //     this.price + 0;
+    //   }
+    //   if (this.adult > 0) {
+    //     priceCal += this.price * this.adult;
+    //   } else {
+    //     this.price + 0;
+    //   }
+    //   return (this.price = priceCal);
+    // },
+    // discountCalculate() {
+    //   if (this.discount > 0) {
+    //     let disc = this.discount / 100;
+    //     let priceDisc = disc * this.personCalculate;
+    //     return this.personCalculate - priceDisc;
+    //   } else {
+    //     return this.personCalculate;
+    //   }
+    // },
+    // total() {
+    //   if (this.tax > 0) {
+    //     let tax = this.tax / 100;
+    //     let priceDisc = tax * this.discountCalculate;
+    //     return this.discountCalculate - priceDisc;
+    //   } else {
+    //     return this.discountCalculate;
+    //   }
+    // },
+  },
+
   actions: {
     adultIncrements() {
-      console.log(this.adult);
       this.adult++;
     },
     childIncrements() {
@@ -23,7 +81,6 @@ export const booking = defineStore({
       this.infant++;
     },
     adultDecrement() {
-      console.log(this.adult);
       this.adult--;
     },
     childDecrement() {
@@ -32,13 +89,70 @@ export const booking = defineStore({
     infantDecrement() {
       this.infant--;
     },
+
+    personCalculate(price) {
+      let priceCal = 0;
+
+      if (this.child > 0) {
+        priceCal += (price * this.child) / 2;
+      } else {
+        price + 0;
+      }
+
+      if (this.infant > 0) {
+        priceCal += (price * this.infant) / 3;
+      } else {
+        price + 0;
+      }
+
+      if (this.adult > 0) {
+        priceCal += price * this.adult;
+      } else {
+        price + 0;
+      }
+
+      return (this.price = priceCal);
+    },
+    discountCalculate() {
+      if (this.discount > 0) {
+        let disc = this.discount / 100;
+        let priceDisc = disc * this.price;
+        return this.price - priceDisc;
+      } else {
+        return this.price;
+      }
+    },
+    total() {
+      if (this.tax > 0) {
+        let tax = this.tax / 100;
+        let priceDisc = tax * this.discountCalculate();
+        return this.discountCalculate() - priceDisc;
+      } else {
+        return this.discountCalculate();
+      }
+    },
+
     async createDestinationBooking() {
       try {
-        const response = axios.post(
+        console.log(router);
+        const response = await axios.post(
           `${BASE_URL}/booking`,
           {
-            adult: 0,
-            child: 0,
+            paymentMethod: this.paymentMethod,
+            child: this.child,
+            adult: this.adult,
+            infant: this.infant,
+            firstName: this.firstName,
+            lastName: this.lastName,
+            phoneNumber: this.phoneNumber,
+            email: this.email,
+            addressLine: this.addressLine,
+            city: this.city,
+            zipCode: this.zipCode,
+            specialRequirement: this.specialRequirement,
+            totalPayment: this.total(),
+            discount: this.discount,
+            destinationId: this.destinationId,
           },
           {
             headers: {
@@ -46,7 +160,24 @@ export const booking = defineStore({
             },
           }
         );
+
+        router.push({
+          name: "booking-success-page",
+          params: { name: `${response.data.data.numberBooking}` },
+        });
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    async getDestinationByNumber(number) {
+      try {
+        const response = await axios.get(`${BASE_URL}/booking/${number}`, {
+          headers: { access_token: localStorage.access_token },
+        });
+
         console.log(response);
+
+        this.bookingByNumber = response.data.data;
       } catch (err) {
         console.log(err);
       }
