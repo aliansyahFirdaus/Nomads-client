@@ -6,7 +6,9 @@ import NavbarComponent from "../components/navbarComponent.vue";
 
 export default {
   data() {
-    return {};
+    return {
+      image: "",
+    };
   },
   computed: {
     ...mapWritableState(booking, ["adult", "child", "infant", "price"]),
@@ -21,6 +23,9 @@ export default {
     },
     dateFormater() {
       return this.destination.departure;
+    },
+    imageGenerator() {
+      return (this.image = `https://source.unsplash.com/random/1920x500/?${this.destination.country}`);
     },
   },
   methods: {
@@ -49,7 +54,9 @@ export default {
 <template>
   <NavbarComponent />
   <div class="container-fluid p-0" style="position: relative">
-    <img src="https://dummyimage.com/1930x500/000/fff" alt="" />
+    <div class="img-banner">
+      <img :src="imageGenerator" />
+    </div>
     <div
       class="container"
       style="position: absolute; top: 350px; right: 0; left: 0"
@@ -297,6 +304,14 @@ export default {
 <style scoped>
 .icon-detail h3 {
   font-size: 25px;
+}
+
+.img-banner {
+  background: linear-gradient(rgba(29, 37, 113, 0), rgb(0, 0, 0))
+}
+
+.img-banner img {
+  opacity: 0.4;
 }
 
 .menu-detail h5 {
