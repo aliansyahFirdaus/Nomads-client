@@ -21,7 +21,7 @@ export default {
 </script>
 
 <template>
-  <nav class="navbar navbar-expand-lg py-3 navbar-dark bg-dark fixed-top">
+  <nav class="navbar navbar-expand-lg py-2 navbar-dark bg-dark fixed-top">
     <div class="container">
       <router-link class="navbar-brand" to="/">
         <img src="../assets/logo/logo-bw.png" alt="" width="70" height="64" />
@@ -133,6 +133,10 @@ export default {
 .btn {
   padding-left: 15px !important;
   padding-right: 15px !important;
+}
+
+.bg-dark {
+  opacity: 0.9;
 }
 
 .nav-item {

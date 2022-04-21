@@ -5,13 +5,13 @@ export default {
     return {
       banner: [
         {
-          img: "https://dummyimage.com/1750x600/000/fff",
+          img: "https://source.unsplash.com/random/1750x600/?travel",
         },
         {
-          img: "https://dummyimage.com/1750x600/370c70/fff",
+          img: "https://source.unsplash.com/random/1750x600/?traveling",
         },
         {
-          img: "https://dummyimage.com/1750x600/6e0c0c/fff",
+          img: "https://source.unsplash.com/random/1750x600/?tour",
         },
       ],
     };
