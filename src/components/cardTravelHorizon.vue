@@ -320,7 +320,7 @@ export default {
             </div>
           </div>
           <div class="col text-end mt-2 me-2">
-            <img src="../assets/airline/Garuda Indonesia.png" width="70" />
+            <img src="../assets/airline/Garuda.png" width="70" />
           </div>
         </div>
       </div>
