@@ -1,13 +1,15 @@
 <script></script>
 
 <template>
-  <div class="container bg-light">
+  <div class="container bg-light shadow-lg">
     <div class="row filter-section">
       <div
         class="col btn filter-button me-4 d-flex align-items-center justify-content-center"
       >
         <h3>Explore Now</h3>
       </div>
+
+      <!-- Country -->
       <div class="col filter-badge py-2 px-4 me-4">
         <div class="row">
           <div
@@ -41,6 +43,8 @@
           </div>
         </div>
       </div>
+
+      <!-- Average Price -->
       <div class="col filter-badge py-2 px-4 me-4">
         <div class="row">
           <div
@@ -76,18 +80,39 @@
           </div>
         </div>
       </div>
-      <div class="col filter-badge py-2 px-4">
+
+      <!-- Date Departure -->
+      <div class="col filter-badge py-2 px-4 me-4">
         <div class="row">
           <div
             class="col-3 text-secondary d-flex align-items-center justify-content-center me-2 border"
             style="border-radius: 15px"
           >
-            <i class="fa-solid fa-paper-plane" style="font-size: 30px"></i>
+            <i class="fa-solid fa-calendar-check" style="font-size: 30px"></i>
           </div>
           <div class="col">
             <div class="row">
-              <h5 class="mt-0 text-secondary">Date</h5>
-              <h3 class="mb-0">24 Jan 2021</h3>
+              <div class="dropdown">
+                <h5 class="mt-0">Date Departure</h5>
+
+                <h3
+                  class="mb-0 dropdown-toggle"
+                  type="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  24 Juni 2021
+                </h3>
+
+                <div class="dropdown-menu">
+                  <input
+                    type="range"
+                    class="form-range dropdown-item"
+                    min="0"
+                    max="5"
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </div>
