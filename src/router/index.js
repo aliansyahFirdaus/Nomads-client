@@ -35,10 +35,15 @@ const router = createRouter({
   routes,
 });
 
-router.beforeEach((to, from) => {
-  if (localStorage.access_token) {
-    
+router.beforeEach((to, from, next) => {
+  if (
+    !localStorage.access_token &&
+    (to.name === "booking-page" || to.name === "booking-success-page")
+  ) {
+    next({ name: "home-page" });
+  } else {
+    next()
   }
-})
+});
 
 export default router;

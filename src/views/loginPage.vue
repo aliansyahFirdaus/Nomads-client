@@ -55,7 +55,6 @@ export default {
                   type="submit"
                   class="btn btn-primary"
                   @click.prevent="loginProcess"
-                  :data-bs-dismiss="isLogin === true ? 'modal' : ''"
                 >
                   Login
                 </button>

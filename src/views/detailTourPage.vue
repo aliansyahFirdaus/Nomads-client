@@ -55,7 +55,7 @@ export default {
   <NavbarComponent />
   <div class="container-fluid p-0" style="position: relative">
     <div class="img-banner">
-      <img :src="imageGenerator" />
+      <img :src="imageGenerator" style="object-fit: cover" />
     </div>
     <div
       class="container"
@@ -307,7 +307,7 @@ export default {
 }
 
 .img-banner {
-  background: linear-gradient(rgba(29, 37, 113, 0), rgb(0, 0, 0))
+  background: linear-gradient(rgba(29, 37, 113, 0), rgb(0, 0, 0));
 }
 
 .img-banner img {

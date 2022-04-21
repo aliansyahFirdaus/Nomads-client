@@ -1,6 +1,7 @@
 <script>
-import { mapState } from "pinia";
+import { mapActions, mapState } from "pinia";
 import { login } from "../stores/login";
+import { logout } from "../stores/logout";
 import LoginPage from "../views/loginPage.vue";
 import RegisterPage from "../views/registerPage.vue";
 export default {
@@ -10,10 +11,10 @@ export default {
       token: localStorage.access_token,
     };
   },
-  computed: {
-    ...mapState(login, ["isLogin"]),
+  computed: {},
+  methods: {
+    ...mapActions(logout, ["logoutProcess"]),
   },
-  methods: {},
   componens: {},
   components: { LoginPage, RegisterPage },
 };
@@ -79,8 +80,27 @@ export default {
         </div>
 
         <!-- Greeting -->
-        <div class="div ms-4 pt-3" v-if="token">
-          <p style="color: white">Hello! {{ name }}</p>
+        <div class="div ms-4" v-if="token">
+          <div class="btn-group">
+            <button class="btn text-light btn-sm" type="button">
+              Hello! {{ name }}
+            </button>
+            <button
+              type="button"
+              class="btn btn-sm text-secondary dropdown-toggle dropdown-toggle-split"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              <span class="visually-hidden">Toggle Dropdown</span>
+            </button>
+            <ul class="dropdown-menu py-2 px-3" @click="logoutProcess">
+              <i
+                class="fa-solid fa-power-off me-2"
+                style="font-size: 14px; color: brown"
+              ></i>
+              Logout
+            </ul>
+          </div>
         </div>
 
         <!-- Login button -->
@@ -99,14 +119,8 @@ export default {
   </nav>
 
   <!-- Login -->
-  <div
-    v-show="isLogin === false"
-    class="modal"
-    id="login"
-    tabindex="-1"
-    aria-hidden="true"
-  >
-    <LoginPage v-show="isLogin === false" />
+  <div class="modal" id="login" tabindex="-1" aria-hidden="true">
+    <LoginPage />
   </div>
 
   <!-- Register -->

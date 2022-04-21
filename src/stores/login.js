@@ -13,15 +13,16 @@ export const login = defineStore({
   }),
   actions: {
     async loginProcess() {
+      console.log("hai");
       try {
         const response = await axios.post(`${BASE_URL}/user/login`, {
           email: this.email,
           password: this.password,
         });
+        console.log(response);
         localStorage.access_token = response.data.access_token;
-        this.name = response.data.firstName;
-        this.isLogin = true;
-        router.push("/")
+        localStorage.firstName = response.data.firstName;
+        router.push({name: "home-page"});
       } catch (err) {
         console.log(err);
       }
