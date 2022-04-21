@@ -2,7 +2,7 @@ import { defineStore } from "pinia";
 import router from "../router";
 import axios from "axios";
 
-const BASE_URL = "http://localhost:3000";
+const BASE_URL = "https://nomads-iproject-travel.herokuapp.com/";
 
 export const login = defineStore({
   id: "login",
