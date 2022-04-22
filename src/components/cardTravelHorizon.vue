@@ -282,7 +282,10 @@ export default {
     },
     toDetailPage() {
       // this.getDestinationById(1)
-      this.$router.push({ name: "detail-page", params: { id: this.data.id } });
+      this.$router.push({
+        name: "detail-page",
+        params: { id: this.data.id, city: this.data.city },
+      });
     },
   },
 };
@@ -307,7 +310,10 @@ export default {
                 class="text-decoration-none tour-name"
                 :to="{ name: 'detail-page', params: { id: data.id } }"
               > -->
-              <h4 style="font-weight: 800; cursor: pointer;" @click="toDetailPage">
+              <h4
+                style="font-weight: 800; cursor: pointer"
+                @click="toDetailPage"
+              >
                 {{ data.city }}
               </h4>
               <!-- </router-link> -->
@@ -376,7 +382,7 @@ export default {
             class="btn btn-success"
             style="padding: 7px 30px; font-weight: 800"
           >
-            Book
+            Detail
           </button>
         </div>
         <div class="col text-center">

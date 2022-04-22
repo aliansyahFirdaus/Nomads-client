@@ -2,6 +2,7 @@ import { defineStore } from "pinia";
 import router from "../router";
 import axios from "axios";
 
+// const BASE_URL = "https://nomads-iproject-travel.herokuapp.com";
 const BASE_URL = "http://localhost:3000";
 
 export const booking = defineStore({
@@ -166,8 +167,6 @@ export const booking = defineStore({
         const response = await axios.get(`${BASE_URL}/booking/${number}`, {
           headers: { access_token: localStorage.access_token },
         });
-
-        console.log(response);
 
         this.bookingByNumber = response.data.data;
       } catch (err) {

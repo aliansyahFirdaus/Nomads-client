@@ -96,7 +96,7 @@ export default {
             <ul class="dropdown-menu py-2 px-3" @click="logoutProcess">
               <i
                 class="fa-solid fa-power-off me-2"
-                style="font-size: 14px; color: brown"
+                style="font-size: 14px; color: brown; cursor: pointer"
               ></i>
               Logout
             </ul>
