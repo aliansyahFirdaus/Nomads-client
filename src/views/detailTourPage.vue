@@ -158,13 +158,25 @@ export default {
             >
               <div class="carousel-inner">
                 <div class="carousel-item active">
-                  <img src="https://source.unsplash.com/random/1750x600/?travel" class="d-block w-100" alt="..." />
+                  <img
+                    src="https://source.unsplash.com/random/1750x600/?travel"
+                    class="d-block w-100"
+                    alt="..."
+                  />
                 </div>
                 <div class="carousel-item">
-                  <img src="https://source.unsplash.com/random/1750x600/?travel" class="d-block w-100" alt="..." />
+                  <img
+                    src="https://source.unsplash.com/random/1750x600/?travel"
+                    class="d-block w-100"
+                    alt="..."
+                  />
                 </div>
                 <div class="carousel-item">
-                  <img src="https://source.unsplash.com/random/1750x600/?travel" class="d-block w-100" alt="..." />
+                  <img
+                    src="https://source.unsplash.com/random/1750x600/?travel"
+                    class="d-block w-100"
+                    alt="..."
+                  />
                 </div>
               </div>
               <button
