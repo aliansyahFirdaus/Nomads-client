@@ -219,19 +219,19 @@ export default {
         <img src="../assets/airline/Airasia.png" width="130" />
       </div>
       <div class="col d-flex align-items-center justify-content-center">
-        <img src="../assets/airline/Citilink (1).png" width="130" />
+        <img src="../assets/airline/Citilink(1).png" width="130" />
       </div>
       <div class="col d-flex align-items-center justify-content-center">
-        <img src="../assets/airline/Etihad (1).png" width="130" />
+        <img src="../assets/airline/Etihad(1).png" width="130" />
       </div>
       <div class="col d-flex align-items-center justify-content-center">
-        <img src="../assets/airline/Garuda Indonesia (1).png" width="130" />
+        <img src="../assets/airline/Garuda-Indonesia-(1).png" width="130" />
       </div>
       <div class="col d-flex align-items-center justify-content-center">
-        <img src="../assets/airline/Scoot (1).png" width="90" />
+        <img src="../assets/airline/Scoot(1).png" width="90" />
       </div>
       <div class="col d-flex align-items-center justify-content-center">
-        <img src="../assets/airline/Singapore Airlines (1).png" width="130" />
+        <img src="../assets/airline/Singapore-Airlines-(1).png" width="130" />
       </div>
     </div>
 
