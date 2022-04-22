@@ -2,7 +2,9 @@
 import { mapActions, mapState, mapWritableState } from "pinia";
 import { destinationById } from "../stores/detailDestination";
 import { booking } from "../stores/booking";
+import { weather } from "../stores/weather";
 import NavbarComponent from "../components/navbarComponent.vue";
+import WeatherCard from "../components/weatherCard.vue";
 
 export default {
   data() {
@@ -13,6 +15,7 @@ export default {
   computed: {
     ...mapWritableState(booking, ["adult", "child", "infant", "price"]),
     ...mapState(destinationById, ["destination"]),
+    ...mapState(weather, ["weatherRes"]),
     priceFormater() {
       let newPrice = new Intl.NumberFormat("id-ID", {
         style: "currency",
@@ -38,16 +41,18 @@ export default {
       "infantDecrement",
     ]),
     ...mapActions(destinationById, ["getDestinationById"]),
+    ...mapActions(weather, ["getWeather"]),
     toBookingPage() {
       this.price = this.destination.price;
       this.$router.push({ name: "booking-page" });
     },
   },
   componens: {},
-  async created() {
-    await this.getDestinationById(this.$route.params.id);
+  created() {
+    this.getDestinationById(this.$route.params.id);
+    this.getWeather(this.$route.params.city);
   },
-  components: { NavbarComponent },
+  components: { NavbarComponent, WeatherCard },
 };
 </script>
 
@@ -62,6 +67,7 @@ export default {
       style="position: absolute; top: 350px; right: 0; left: 0"
     >
       <div class="row">
+        <!-- <h1> {{ destination }} </h1> -->
         <div class="col-9 text-start">
           <div class="row text-light" style="padding: 16px 0">
             <h1 style="font-size: 50px">{{ destination.city }}</h1>
@@ -131,22 +137,66 @@ export default {
               <h5>Weather</h5>
             </div>
           </div>
-          <div id="detail" class="row mt-5" style="width: 900px">
-            <h1 class="mb-5">Tour Detail</h1>
-            <p>
-              {{ destination.overview }}
-            </p>
-          </div>
           <div id="map" class="row mt-5" style="width: 900px">
             <h1 class="mb-5">Tour Detail</h1>
             <p>
               {{ destination.overview }}
             </p>
           </div>
-          <div id="photo" class="row mt-5" style="width: 900px">
-            <h1 class="mb-5">Tour Detail</h1>
+          <div id="map" class="row mt-5" style="width: 900px">
+            <h1 class="mb-5">Map</h1>
             <p>
               {{ destination.overview }}
+            </p>
+          </div>
+          <div id="photo" class="row mt-5" style="width: 900px">
+            <h1 class="mb-5">Photo</h1>
+            <div
+              id="carouselExampleIndicators"
+              class="carousel slide"
+              data-bs-ride="carousel"
+            >
+              <div class="carousel-inner">
+                <div class="carousel-item active">
+                  <img src="https://source.unsplash.com/random/1750x600/?travel" class="d-block w-100" alt="..." />
+                </div>
+                <div class="carousel-item">
+                  <img src="https://source.unsplash.com/random/1750x600/?travel" class="d-block w-100" alt="..." />
+                </div>
+                <div class="carousel-item">
+                  <img src="https://source.unsplash.com/random/1750x600/?travel" class="d-block w-100" alt="..." />
+                </div>
+              </div>
+              <button
+                class="carousel-control-prev"
+                type="button"
+                data-bs-target="#carouselExampleIndicators"
+                data-bs-slide="prev"
+              >
+                <span
+                  class="carousel-control-prev-icon"
+                  aria-hidden="true"
+                ></span>
+                <span class="visually-hidden">Previous</span>
+              </button>
+              <button
+                class="carousel-control-next"
+                type="button"
+                data-bs-target="#carouselExampleIndicators"
+                data-bs-slide="next"
+              >
+                <span
+                  class="carousel-control-next-icon"
+                  aria-hidden="true"
+                ></span>
+                <span class="visually-hidden">Next</span>
+              </button>
+            </div>
+          </div>
+          <div id="wheater" class="row mt-5" style="width: 900px">
+            <h1 class="mb-5">Weather</h1>
+            <p>
+              <WeatherCard :weather="weatherRes" />
             </p>
           </div>
         </div>

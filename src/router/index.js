@@ -18,7 +18,7 @@ const routes = [
   { path: "/", name: "home-page", component: HomePage },
   { path: "/profile", name: "profile-page", component: ProfilePage },
   { path: "/checkout/:id", name: "booking-page", component: BookingPage },
-  { path: "/detail/:id", name: "detail-page", component: Detailpage },
+  { path: "/detail/:id/:city", name: "detail-page", component: Detailpage },
   { path: "/tag/:name", name: "tag-page", component: TagPage },
   { path: "/country/:name", name: "contry-page", component: CountryPage },
   { path: "/wishlist", name: "wishlist-page", component: ProfilePage },
