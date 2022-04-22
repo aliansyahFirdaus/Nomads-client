@@ -14,6 +14,7 @@ export default {
   methods: {
     ...mapActions(destinationById, ["getDestinationById"]),
     ...mapActions(booking, ["createDestinationBooking", "personCalculate", "discountCalculate", "total"]),
+    ...mapActions(booking, ["paymentProcess"]),
 
     priceFormater(price) {
       let priceFormat = new Intl.NumberFormat("id-ID", {
@@ -180,7 +181,7 @@ export default {
 
           <div class="row mt-5">
             <!-- Payment Methods -->
-            <h3 style="font-weight: 800">Payment Methods</h3>
+            <!-- <h3 style="font-weight: 800">Payment Methods</h3>
 
             <hr />
 
@@ -196,11 +197,6 @@ export default {
                 />
                 <label class="form-check-label" for="BankTransfer">
                   Bank Transfer
-                  <!-- <img
-                src="https://upload.wikimedia.org/wikipedia/id/thumb/e/e4/ATM_PRIMA.png/1200px-ATM_PRIMA.png"
-                width="70"
-                alt=""
-              /> -->
                 </label>
               </div>
             </div>
@@ -216,11 +212,6 @@ export default {
                 />
                 <label class="form-check-label" for="Gopay">
                   Gopay
-                  <!-- <img
-                src="https://upload.wikimedia.org/wikipedia/id/thumb/e/e4/ATM_PRIMA.png/1200px-ATM_PRIMA.png"
-                width="70"
-                alt=""
-              /> -->
                 </label>
               </div>
             </div>
@@ -236,11 +227,6 @@ export default {
                 />
                 <label class="form-check-label" for="Dana">
                   Bank Transfer
-                  <!-- <img
-                src="https://upload.wikimedia.org/wikipedia/id/thumb/e/e4/ATM_PRIMA.png/1200px-ATM_PRIMA.png"
-                width="70"
-                alt=""
-              /> -->
                 </label>
               </div>
             </div>
@@ -256,14 +242,9 @@ export default {
                 />
                 <label class="form-check-label" for="Indomart">
                   Bank Transfer
-                  <!-- <img
-                src="https://upload.wikimedia.org/wikipedia/id/thumb/e/e4/ATM_PRIMA.png/1200px-ATM_PRIMA.png"
-                width="70"
-                alt=""
-              /> -->
                 </label>
               </div>
-            </div>
+            </div> -->
 
             <!-- Terms and Condition -->
             <div class="form-check">
@@ -282,9 +263,9 @@ export default {
                 <a
                   class="btn btn-dark"
                   style="border-radius: 0 !important; font-weight: 800"
-                  @click.prevent="createDestinationBooking"
+                  @click.prevent="paymentProcess"
                 >
-                  Submit
+                  Payment
                 </a>
               </div>
             </div>
