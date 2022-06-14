@@ -381,6 +381,7 @@ export default {
           <button
             class="btn btn-success"
             style="padding: 7px 30px; font-weight: 800"
+            @click="toDetailPage"
           >
             Detail
           </button>

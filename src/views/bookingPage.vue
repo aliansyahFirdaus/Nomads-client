@@ -263,7 +263,7 @@ export default {
                 <a
                   class="btn btn-dark"
                   style="border-radius: 0 !important; font-weight: 800"
-                  @click.prevent="paymentProcess"
+                  @click.prevent="createDestinationBooking"
                 >
                   Payment
                 </a>

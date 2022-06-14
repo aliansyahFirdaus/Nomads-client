@@ -1,4 +1,5 @@
-<script></script>
+<script>
+</script>
 
 <template>
   <div class="container bg-light shadow-lg">
@@ -68,12 +69,7 @@
                 </h3>
 
                 <div class="dropdown-menu">
-                  <input
-                    type="range"
-                    class="form-range dropdown-item"
-                    min="0"
-                    max="5"
-                  />
+                  <input type="date" name="" id="">
                 </div>
               </div>
             </div>

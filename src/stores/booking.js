@@ -2,8 +2,8 @@ import { defineStore } from "pinia";
 import router from "../router";
 import axios from "axios";
 
-// const BASE_URL = "https://nomads-iproject-travel.herokuapp.com";
-const BASE_URL = "http://localhost:3000";
+const BASE_URL = "https://nomads-server.herokuapp.com";
+// const BASE_URL = "http://localhost:3000";
 
 export const booking = defineStore({
   id: "booking",
@@ -95,36 +95,36 @@ export const booking = defineStore({
       }
     },
 
-    async paymentProcess() {
-      try {
-        const paymentProcess = await axios.post(
-          `${BASE_URL}/booking/checkout`,
-          {
-            bookNumber: "1124",
-            firstName: this.firstName,
-            lastName: this.lastName,
-            phoneNumber: this.phoneNumber,
-            email: this.email,
-            addressLine: this.addressLine,
-            city: this.city,
-            zipCode: this.zipCode,
-            payment: Math.round(this.total()),
-          },
-          {
-            headers: {
-              access_token: localStorage.access_token,
-            },
-          }
-        );
+    // async paymentProcess() {
+    //   try {
+    //     const paymentProcess = await axios.post(
+    //       `${BASE_URL}/booking/checkout`,
+    //       {
+    //         bookNumber: "1124",
+    //         firstName: this.firstName,
+    //         lastName: this.lastName,
+    //         phoneNumber: this.phoneNumber,
+    //         email: this.email,
+    //         addressLine: this.addressLine,
+    //         city: this.city,
+    //         zipCode: this.zipCode,
+    //         payment: Math.round(this.total()),
+    //       },
+    //       {
+    //         headers: {
+    //           access_token: localStorage.access_token,
+    //         },
+    //       }
+    //     );
 
-        console.log(paymentProcess);
+    //     console.log(paymentProcess);
 
-        await snap.pay(paymentProcess.data.token);
+    //     await snap.pay(paymentProcess.data.token);
 
-      } catch (err) {
-        console.log(err);
-      }
-    },
+    //   } catch (err) {
+    //     console.log(err);
+    //   }
+    // },
 
     async createDestinationBooking() {
       try {
@@ -153,10 +153,34 @@ export const booking = defineStore({
           }
         );
 
-        // router.push({
-        //   name: "booking-success-page",
-        //   params: { name: `${response.data.data.numberBooking}` },
-        // });
+        const paymentProcess = await axios.post(
+          `${BASE_URL}/booking/checkout`,
+          {
+            bookNumber: response.data.data.numberBooking,
+            firstName: this.firstName,
+            lastName: this.lastName,
+            phoneNumber: this.phoneNumber,
+            email: this.email,
+            addressLine: this.addressLine,
+            city: this.city,
+            zipCode: this.zipCode,
+            payment: Math.round(this.total()),
+          },
+          {
+            headers: {
+              access_token: localStorage.access_token,
+            },
+          }
+        );
+
+        console.log(paymentProcess);
+
+        await snap.pay(paymentProcess.data.token);
+
+        router.push({
+          name: "booking-success-page",
+          params: { name: `${response.data.data.numberBooking}` },
+        });
       } catch (err) {
         console.log(err);
       }

@@ -4,8 +4,8 @@ import axios from "axios";
 // import router from "vue-toast-notification";
 // import "vue-toast-notification/dist/theme-sugar.css";
 
-// const BASE_URL = "https://nomads-iproject-travel.herokuapp.com";
-const BASE_URL = "http://localhost:3000";
+const BASE_URL = "https://nomads-server.herokuapp.com";
+// const BASE_URL = "http://localhost:3000";
 
 export const login = defineStore({
   id: "login",

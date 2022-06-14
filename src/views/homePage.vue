@@ -293,7 +293,8 @@ export default {
 .filter {
   right: 0;
   left: 0;
-  top: 580px;
+  margin-top: 560px;
+  top: 0px;
   position: absolute;
   border-radius: 20px;
 }
